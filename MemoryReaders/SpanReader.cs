@@ -28,7 +28,7 @@ public ref struct SpanReader<T> where T : unmanaged, IEquatable<T>
     /// Gets a value indicating whether the reader has
     /// reached the end of the <see cref="Span"/>.
     /// </summary>
-    public readonly bool End => Index == Span.Length;
+    public readonly bool End => Index >= Span.Length;
 
     /// <summary>
     /// Gets the number of remaining <typeparamref name="T"/>'s

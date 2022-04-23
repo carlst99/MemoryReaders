@@ -28,7 +28,7 @@ public struct MemoryReader<T> where T : unmanaged, IEquatable<T>
     /// Gets a value indicating whether the reader has
     /// reached the end of the <see cref="Memory"/>.
     /// </summary>
-    public readonly bool End => Index == Memory.Length;
+    public readonly bool End => Index >= Memory.Length;
 
     /// <summary>
     /// Gets the number of remaining <typeparamref name="T"/>'s
