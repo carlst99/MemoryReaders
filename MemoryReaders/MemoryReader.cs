@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace MemoryReaders;
 
@@ -17,9 +18,23 @@ public struct MemoryReader<T> where T : unmanaged, IEquatable<T>
 
     /// <summary>
     /// Gets the current index at which this <see cref="MemoryReader{T}"/>
-    /// is consuming data from the read-only memory source.
+    /// is consuming data from the <see cref="Memory"/>.
+    /// This value will be invalid if the reader has reached the end
+    /// of the underlying <see cref="Memory"/>.
     /// </summary>
     public int Index { get; private set; }
+
+    /// <summary>
+    /// Gets a value indicating whether the reader has
+    /// reached the end of the <see cref="Memory"/>.
+    /// </summary>
+    public readonly bool End => Index == Memory.Length;
+
+    /// <summary>
+    /// Gets the number of remaining <typeparamref name="T"/>'s
+    /// in the reader's <see cref="Memory"/>.
+    /// </summary>
+    public readonly int Remaining => Memory.Length - Index;
 
     /// <summary>
     /// Creates a <see cref="MemoryReader{T}"/> over the given <see cref="ReadOnlyMemory{T}"/>
@@ -32,6 +47,62 @@ public struct MemoryReader<T> where T : unmanaged, IEquatable<T>
     }
 
     /// <summary>
+    /// Advances the reader by the given number of items.
+    /// </summary>
+    /// <remarks>
+    /// If the <paramref name="count"/> would move the reader past the end,
+    /// it will simply move to the end of the <see cref="Memory"/>.
+    /// </remarks>
+    /// <param name="count">The number of items to move ahead by.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Advance(int count)
+    {
+        if (count > Remaining)
+            Index = Memory.Span.Length;
+        else
+            Index += count;
+    }
+
+    /// <summary>
+    /// Peeks at the next value without advancing the reader.
+    /// </summary>
+    /// <param name="value">The next value, or default if at the <see cref="End"/></param>
+    /// <returns><c>False</c> if at the end of the reader.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public readonly bool TryPeek(out T value)
+    {
+        if (End)
+        {
+            value = default;
+            return false;
+        }
+
+        value = Memory.Span[Index];
+        return true;
+    }
+
+    /// <summary>
+    /// Peeks at the value at the given offset without advancing the reader.
+    /// </summary>
+    /// <param name="offset">The offset from the current <see cref="Index"/>.</param>
+    /// <param name="value">
+    /// The value, or default if the offset is beyond the <see cref="End"/> of the reader.
+    /// </param>
+    /// <returns><c>False</c> if the offset is beyond the <see cref="End"/> of the reader.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public readonly bool TryPeek(int offset, out T value)
+    {
+        if (offset >= Remaining)
+        {
+            value = default;
+            return false;
+        }
+
+        value = Memory.Span[Index + offset];
+        return true;
+    }
+
+    /// <summary>
     /// Advances to the given delimiter, if found, and optionally advances past it.
     /// </summary>
     /// <param name="delimiter">The delimiter to search for.</param>
@@ -39,6 +110,9 @@ public struct MemoryReader<T> where T : unmanaged, IEquatable<T>
     /// <returns><c>True</c> if the given <paramref name="delimiter"/> was found, otherwise <c>False</c>.</returns>
     public bool TryAdvanceTo(T delimiter, bool advancePastDelimiter = true)
     {
+        if (End)
+            return false;
+
         int index = Memory.Span[Index..].IndexOf(delimiter);
         if (index == -1)
             return false;
