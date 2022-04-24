@@ -86,10 +86,10 @@ public ref struct SpanReader<T> where T : unmanaged, IEquatable<T>
     }
 
     /// <summary>
-    /// Peeks at the next value without advancing the reader.
+    /// Attempts to peek at the next value without advancing the reader.
     /// </summary>
-    /// <param name="value">The next value, or default if at the <see cref="End"/></param>
-    /// <returns><c>False</c> if at the end of the reader.</returns>
+    /// <param name="value">The next value, or <c>default</c> if at the <see cref="End"/></param>
+    /// <returns><c>False</c> if at the end of the reader, otherwise <c>True</c>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly bool TryPeek(out T value)
     {
@@ -104,11 +104,11 @@ public ref struct SpanReader<T> where T : unmanaged, IEquatable<T>
     }
 
     /// <summary>
-    /// Peeks at the value at the given offset without advancing the reader.
+    /// Attempts to peek at the value at the given offset without advancing the reader.
     /// </summary>
     /// <param name="offset">The offset from the current <see cref="Index"/>.</param>
     /// <param name="value">
-    /// The value, or default if the offset is beyond the <see cref="End"/> of the reader.
+    /// The value, or <c>default</c> if the offset is beyond the <see cref="End"/> of the reader.
     /// </param>
     /// <returns><c>False</c> if the offset is beyond the <see cref="End"/> of the reader.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -121,6 +121,24 @@ public ref struct SpanReader<T> where T : unmanaged, IEquatable<T>
         }
 
         value = Span[Index + offset];
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to read the next value and advance the reader.
+    /// </summary>
+    /// <param name="value">The value, or <c>default</c> if at the <see cref="End"/>.</param>
+    /// <returns><c>False</c> if at the end of the reader, otherwise <c>True</c>.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool TryRead(out T value)
+    {
+        if (End)
+        {
+            value = default;
+            return false;
+        }
+
+        value = Span[Index++];
         return true;
     }
 
