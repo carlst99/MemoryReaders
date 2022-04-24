@@ -16,7 +16,7 @@
         <PackageProjectUrl>https://github.com/carlst99/MemoryReaders</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/carlst99/MemoryReaders</RepositoryUrl>
-        <PackageOutputPath>$(MSBuildThisFileDirectory)nuget</PackageOutputPath>
+        <PackageOutputPath>$(MSBuildThisFileDirectory)..\nuget</PackageOutputPath>
     </PropertyGroup>
 
     <!-- Source-link setup -->
