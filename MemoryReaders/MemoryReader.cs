@@ -17,24 +17,22 @@ namespace MemoryReaders
         public readonly ReadOnlyMemory<T> Memory;
 
         /// <summary>
-        /// Gets the current index at which this <see cref="MemoryReader{T}"/>
-        /// is consuming data from the <see cref="Memory"/>.
-        /// This value will be invalid if the reader has reached the end
-        /// of the underlying <see cref="Memory"/>.
+        /// Gets the number of items that this <see cref="MemoryReader{T}"/>
+        /// has consumed from the underlying <see cref="Memory"/>.
         /// </summary>
-        public int Index { get; private set; }
+        public int Consumed { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the reader has
         /// reached the end of the <see cref="Memory"/>.
         /// </summary>
-        public readonly bool End => Index >= Memory.Length;
+        public readonly bool End => Consumed >= Memory.Length;
 
         /// <summary>
         /// Gets the number of remaining <typeparamref name="T"/>'s
         /// in the reader's <see cref="Memory"/>.
         /// </summary>
-        public readonly int Remaining => Memory.Length - Index;
+        public readonly int Remaining => Memory.Length - Consumed;
 
         /// <summary>
         /// Creates a <see cref="MemoryReader{T}"/> over the given <see cref="ReadOnlyMemory{T}"/>
@@ -43,19 +41,19 @@ namespace MemoryReaders
         public MemoryReader(ReadOnlyMemory<T> memory)
         {
             Memory = memory;
-            Index = 0;
+            Consumed = 0;
         }
 
         /// <summary>
         /// Forms a slice out of the current <see cref="MemoryReader{T}"/>,
-        /// beginning at the current <see cref="Index"/>.
+        /// beginning at the current <see cref="Consumed"/>.
         /// </summary>
         /// <param name="length">The desired length of the slice.</param>
         /// <returns>
         /// A <see cref="MemoryReader{T}"/> backed by a slice of the current <see cref="Memory"/>.
         /// </returns>
         public MemoryReader<T> Slice(int length)
-            => new MemoryReader<T>(Memory.Slice(Index, length));
+            => new MemoryReader<T>(Memory.Slice(Consumed, length));
 
         /// <summary>
         /// Forms a slice out of the current <see cref="MemoryReader{T}"/>.
@@ -84,9 +82,9 @@ namespace MemoryReaders
                 throw new ArgumentOutOfRangeException(nameof(count), count, "Count must not be negative");
 
             if (count > Remaining)
-                Index = Memory.Span.Length;
+                Consumed = Memory.Span.Length;
             else
-                Index += count;
+                Consumed += count;
         }
 
         /// <summary>
@@ -104,10 +102,10 @@ namespace MemoryReaders
             if (count < 0)
                 throw new ArgumentOutOfRangeException(nameof(count), count, "Count must not be negative");
 
-            if (count > Index)
-                Index = 0;
+            if (count > Consumed)
+                Consumed = 0;
             else
-                Index -= count;
+                Consumed -= count;
         }
 
         /// <summary>
@@ -124,14 +122,14 @@ namespace MemoryReaders
                 return false;
             }
 
-            value = Memory.Span[Index];
+            value = Memory.Span[Consumed];
             return true;
         }
 
         /// <summary>
         /// Attempts to peek at the value at the given offset without advancing the reader.
         /// </summary>
-        /// <param name="offset">The offset from the current <see cref="Index"/>.</param>
+        /// <param name="offset">The offset from the current <see cref="Consumed"/>.</param>
         /// <param name="value">
         /// The value, or <c>default</c> if the offset is beyond the <see cref="End"/> of the reader.
         /// </param>
@@ -149,7 +147,7 @@ namespace MemoryReaders
                 return false;
             }
 
-            value = Memory.Span[Index + offset];
+            value = Memory.Span[Consumed + offset];
             return true;
         }
 
@@ -167,7 +165,7 @@ namespace MemoryReaders
                 return false;
             }
 
-            value = Memory.Span[Index++];
+            value = Memory.Span[Consumed++];
             return true;
         }
 
@@ -182,11 +180,11 @@ namespace MemoryReaders
             if (End)
                 return false;
 
-            int index = Memory.Span[Index..].IndexOf(delimiter);
+            int index = Memory.Span[Consumed..].IndexOf(delimiter);
             if (index == -1)
                 return false;
 
-            Index = advancePastDelimiter ? index + 1 : index;
+            Consumed = advancePastDelimiter ? index + 1 : index;
             return true;
         }
 
@@ -201,11 +199,11 @@ namespace MemoryReaders
             if (End)
                 return false;
 
-            int index = Memory.Span[Index..].IndexOf(delimiter);
+            int index = Memory.Span[Consumed..].IndexOf(delimiter);
             if (index == -1)
                 return false;
 
-            Index = advancePastDelimiter ? index + delimiter.Length : index;
+            Consumed = advancePastDelimiter ? index + delimiter.Length : index;
             return true;
         }
     }

@@ -12,11 +12,11 @@ public class Rewind
 
         reader.Advance(2);
         reader.Rewind(1);
-        Assert.Equal(1, reader.Index);
+        Assert.Equal(1, reader.Consumed);
 
         reader.Advance(4);
         reader.Rewind(2);
-        Assert.Equal(3, reader.Index);
+        Assert.Equal(3, reader.Consumed);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class Rewind
 
         reader.Advance(5);
         reader.Rewind(10);
-        Assert.Equal(0, reader.Index);
+        Assert.Equal(0, reader.Consumed);
     }
 
     [Fact]

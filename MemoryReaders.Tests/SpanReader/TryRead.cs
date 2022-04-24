@@ -11,7 +11,7 @@ public class TryRead
         bool read = reader.TryRead(out char value);
 
         Assert.True(read);
-        Assert.Equal(1, reader.Index);
+        Assert.Equal(1, reader.Consumed);
         Assert.Equal(Constants.DataString[0], value);
     }
 
@@ -23,7 +23,7 @@ public class TryRead
         bool peeked = reader.TryRead(out char value);
 
         Assert.True(peeked);
-        Assert.Equal(Constants.DataString.Length, reader.Index);
+        Assert.Equal(Constants.DataString.Length, reader.Consumed);
         Assert.Equal(Constants.DataString[^1], value);
     }
 

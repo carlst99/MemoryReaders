@@ -12,7 +12,7 @@ public class TryAdvanceTo
         bool advanced = reader.TryAdvanceTo(Constants.DataString[^5], false);
 
         Assert.True(advanced);
-        Assert.Equal(Constants.DataString.Length - 5, reader.Index);
+        Assert.Equal(Constants.DataString.Length - 5, reader.Consumed);
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public class TryAdvanceTo
         bool advanced = reader.TryAdvanceTo(Constants.DataString[^5], true);
 
         Assert.True(advanced);
-        Assert.Equal(Constants.DataString.Length - 4, reader.Index);
+        Assert.Equal(Constants.DataString.Length - 4, reader.Consumed);
     }
 
     [Fact]
@@ -35,7 +35,7 @@ public class TryAdvanceTo
         bool advanced = reader.TryAdvanceTo(Constants.AbsentCharacter, false);
 
         Assert.False(advanced);
-        Assert.Equal(0, reader.Index);
+        Assert.Equal(0, reader.Consumed);
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class TryAdvanceTo
         bool advanced = reader.TryAdvanceTo(Constants.AbsentCharacter, true);
 
         Assert.False(advanced);
-        Assert.Equal(0, reader.Index);
+        Assert.Equal(0, reader.Consumed);
     }
 
     [Fact]
@@ -67,7 +67,7 @@ public class TryAdvanceTo
         bool advanced = reader.TryAdvanceTo(Constants.DataString[5..10], false);
 
         Assert.True(advanced);
-        Assert.Equal(5, reader.Index);
+        Assert.Equal(5, reader.Consumed);
     }
 
     [Fact]
@@ -79,7 +79,7 @@ public class TryAdvanceTo
         bool advanced = reader.TryAdvanceTo(Constants.DataString[5..10], true);
 
         Assert.True(advanced);
-        Assert.Equal(10, reader.Index);
+        Assert.Equal(10, reader.Consumed);
     }
 
     [Fact]
@@ -90,7 +90,7 @@ public class TryAdvanceTo
         bool advanced = reader.TryAdvanceTo(new[] { Constants.AbsentCharacter, Constants.AbsentCharacter }, false);
 
         Assert.False(advanced);
-        Assert.Equal(0, reader.Index);
+        Assert.Equal(0, reader.Consumed);
     }
 
     [Fact]
@@ -102,7 +102,7 @@ public class TryAdvanceTo
         bool advanced = reader.TryAdvanceTo(new[] { Constants.AbsentCharacter, Constants.AbsentCharacter }, true);
 
         Assert.False(advanced);
-        Assert.Equal(0, reader.Index);
+        Assert.Equal(0, reader.Consumed);
     }
 
     [Fact]

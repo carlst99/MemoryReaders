@@ -11,10 +11,10 @@ public class Advance
         SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         reader.Advance(2);
-        Assert.Equal(2, reader.Index);
+        Assert.Equal(2, reader.Consumed);
 
         reader.Advance(3);
-        Assert.Equal(5, reader.Index);
+        Assert.Equal(5, reader.Consumed);
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public class Advance
         SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         reader.Advance(Constants.DataString.Length + 5);
-        Assert.Equal(Constants.DataString.Length, reader.Index);
+        Assert.Equal(Constants.DataString.Length, reader.Consumed);
     }
 
     [Fact]

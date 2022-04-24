@@ -32,7 +32,7 @@ public class TryAdvanceTo
         reader.TryAdvanceTo('j');
         reader.TryAdvanceTo('o');
 
-        return reader.Index;
+        return reader.Consumed;
     }
 
     [Benchmark]
@@ -47,6 +47,6 @@ public class TryAdvanceTo
         reader.TryAdvanceTo('j');
         reader.TryAdvanceTo('o');
 
-        return reader.Index;
+        return reader.Consumed;
     }
 }
