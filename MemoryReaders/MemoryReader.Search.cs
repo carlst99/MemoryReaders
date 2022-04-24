@@ -1,9 +1,25 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace MemoryReaders
 {
     public partial struct MemoryReader<T> where T : unmanaged, IEquatable<T>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool IsNext(T value, bool advancePast = false)
+        {
+            if (!TryPeek(out T next))
+                return false;
+
+            if (!next.Equals(value))
+                return false;
+
+            if (advancePast)
+                Consumed++;
+
+            return true;
+        }
+
         /// <summary>
         /// Advances to the given delimiter, if found, and optionally advances past it.
         /// </summary>
