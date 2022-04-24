@@ -49,4 +49,50 @@ public class TryAdvanceTo
         Assert.False(advanced);
         Assert.Equal(0, reader.Index);
     }
+
+    [Fact]
+    public void SuccessfullyAdvancesToSpanDelimeter()
+    {
+        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+
+        bool advanced = reader.TryAdvanceTo(Constants.DataString[5..10], false);
+
+        Assert.True(advanced);
+        Assert.Equal(5, reader.Index);
+    }
+
+    [Fact]
+    public void SuccessfullyAdvancesPastSpanDelimeter()
+    {
+        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+
+        // ReSharper disable once RedundantArgumentDefaultValue
+        bool advanced = reader.TryAdvanceTo(Constants.DataString[5..10], true);
+
+        Assert.True(advanced);
+        Assert.Equal(10, reader.Index);
+    }
+
+    [Fact]
+    public void FailsToAdvanceToSpanDelimeter()
+    {
+        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+
+        bool advanced = reader.TryAdvanceTo(new[] { Constants.AbsentCharacter, Constants.AbsentCharacter }, false);
+
+        Assert.False(advanced);
+        Assert.Equal(0, reader.Index);
+    }
+
+    [Fact]
+    public void FailsToAdvancePastSpanDelimeter()
+    {
+        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+
+        // ReSharper disable once RedundantArgumentDefaultValue
+        bool advanced = reader.TryAdvanceTo(new[] { Constants.AbsentCharacter, Constants.AbsentCharacter }, true);
+
+        Assert.False(advanced);
+        Assert.Equal(0, reader.Index);
+    }
 }
