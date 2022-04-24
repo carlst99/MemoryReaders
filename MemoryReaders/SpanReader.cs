@@ -76,6 +76,7 @@ public ref struct SpanReader<T> where T : unmanaged, IEquatable<T>
     /// it will simply move to the end of the <see cref="Span"/>.
     /// </remarks>
     /// <param name="count">The number of items to move ahead by.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="count"/> is negative.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Advance(int count)
     {
@@ -86,6 +87,27 @@ public ref struct SpanReader<T> where T : unmanaged, IEquatable<T>
             Index = Span.Length;
         else
             Index += count;
+    }
+
+    /// <summary>
+    /// Rewinds the reader by the given number of items.
+    /// </summary>
+    /// <remarks>
+    /// If the <paramref name="count"/> would move the reader beyond the
+    /// start, it will simply move no further without raising an exception.
+    /// </remarks>
+    /// <param name="count">The number of items to move backwards by.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="count"/> is negative.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Rewind(int count)
+    {
+        if (count < 0)
+            throw new ArgumentOutOfRangeException(nameof(count), count, "Count must not be negative");
+
+        if (count > Index)
+            Index = 0;
+        else
+            Index -= count;
     }
 
     /// <summary>
@@ -114,6 +136,7 @@ public ref struct SpanReader<T> where T : unmanaged, IEquatable<T>
     /// The value, or <c>default</c> if the offset is beyond the <see cref="End"/> of the reader.
     /// </param>
     /// <returns><c>False</c> if the offset is beyond the <see cref="End"/> of the reader.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="offset"/> is negative.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly bool TryPeek(int offset, out T value)
     {
