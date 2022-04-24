@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace MemoryReaders.Tests.SpanReader;
 
@@ -23,5 +24,14 @@ public class Advance
 
         reader.Advance(Constants.DataString.Length + 5);
         Assert.Equal(Constants.DataString.Length, reader.Index);
+    }
+
+    [Fact]
+    public void ThrowsWithNegativeCount()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>
+        (
+            () => Constants.DefaultSpanReader.Advance(-1)
+        );
     }
 }

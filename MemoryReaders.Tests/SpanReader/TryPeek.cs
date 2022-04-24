@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace MemoryReaders.Tests.SpanReader;
 
@@ -66,5 +67,14 @@ public class TryPeek
 
         Assert.False(peeked);
         Assert.Equal(default, value);
+    }
+
+    [Fact]
+    public void ThrowsWithNegativeOffset()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>
+        (
+            () => Constants.DefaultSpanReader.TryPeek(-1, out _)
+        );
     }
 }

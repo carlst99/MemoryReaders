@@ -79,6 +79,9 @@ public struct MemoryReader<T> where T : unmanaged, IEquatable<T>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Advance(int count)
     {
+        if (count < 0)
+            throw new ArgumentOutOfRangeException(nameof(count), count, "Count must not be negative");
+
         if (count > Remaining)
             Index = Memory.Span.Length;
         else
@@ -114,6 +117,9 @@ public struct MemoryReader<T> where T : unmanaged, IEquatable<T>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly bool TryPeek(int offset, out T value)
     {
+        if (offset < 0)
+            throw new ArgumentOutOfRangeException(nameof(offset), offset, "Offset must not be negative");
+
         if (offset >= Remaining)
         {
             value = default;
