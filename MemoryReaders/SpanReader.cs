@@ -47,6 +47,28 @@ public ref struct SpanReader<T> where T : unmanaged, IEquatable<T>
     }
 
     /// <summary>
+    /// Forms a slice out of the current <see cref="SpanReader{T}"/>,
+    /// beginning at the current <see cref="Index"/>.
+    /// </summary>
+    /// <param name="length">The desired length of the slice.</param>
+    /// <returns>
+    /// A <see cref="SpanReader{T}"/> backed by a slice of the current <see cref="Span"/>.
+    /// </returns>
+    public SpanReader<T> Slice(int length)
+        => new(Span.Slice(Index, length));
+
+    /// <summary>
+    /// Forms a slice out of the current <see cref="SpanReader{T}"/>.
+    /// </summary>
+    /// <param name="start">The index to begin the slice at.</param>
+    /// <param name="length">The desired length of the slice.</param>
+    /// <returns>
+    /// A <see cref="SpanReader{T}"/> backed by a slice of the current <see cref="Span"/>.
+    /// </returns>
+    public SpanReader<T> Slice(int start, int length)
+        => new(Span.Slice(start, length));
+
+    /// <summary>
     /// Advances the reader by the given number of items.
     /// </summary>
     /// <remarks>
