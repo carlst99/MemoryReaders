@@ -8,7 +8,7 @@ public class Advance
     [Fact]
     public void Succeeds()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
 
         reader.Advance(2);
         Assert.Equal(2, reader.Index);
@@ -20,7 +20,7 @@ public class Advance
     [Fact]
     public void SucceedsWhenAdvancingPastEnd()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
 
         reader.Advance(Constants.DataString.Length + 5);
         Assert.Equal(Constants.DataString.Length, reader.Index);
@@ -31,7 +31,7 @@ public class Advance
     {
         Assert.Throws<ArgumentOutOfRangeException>
         (
-            () => Constants.DefaultMemoryReader.Advance(-1)
+            () => Constants.GetDefaultMemoryReader().Advance(-1)
         );
     }
 }

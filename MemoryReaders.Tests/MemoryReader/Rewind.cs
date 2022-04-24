@@ -8,7 +8,7 @@ public class Rewind
     [Fact]
     public void Succeeds()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
 
         reader.Advance(2);
         reader.Rewind(1);
@@ -22,7 +22,7 @@ public class Rewind
     [Fact]
     public void SucceedsWhenRewindingPastStart()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
 
         reader.Advance(5);
         reader.Rewind(10);
@@ -34,7 +34,7 @@ public class Rewind
     {
         Assert.Throws<ArgumentOutOfRangeException>
         (
-            () => Constants.DefaultMemoryReader.Rewind(-1)
+            () => Constants.GetDefaultMemoryReader().Rewind(-1)
         );
     }
 }

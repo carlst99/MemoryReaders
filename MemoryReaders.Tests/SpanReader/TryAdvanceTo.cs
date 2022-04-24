@@ -7,7 +7,7 @@ public class TryAdvanceTo
     [Fact]
     public void SuccessfullyAdvancesToDelimeter()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         bool advanced = reader.TryAdvanceTo(Constants.DataString[^5], false);
 
@@ -18,7 +18,7 @@ public class TryAdvanceTo
     [Fact]
     public void SuccessfullyAdvancesPastDelimeter()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         // ReSharper disable once RedundantArgumentDefaultValue
         bool advanced = reader.TryAdvanceTo(Constants.DataString[^5], true);
@@ -30,7 +30,7 @@ public class TryAdvanceTo
     [Fact]
     public void FailsToAdvanceToDelimeter()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         bool advanced = reader.TryAdvanceTo(Constants.AbsentCharacter, false);
 
@@ -41,7 +41,7 @@ public class TryAdvanceTo
     [Fact]
     public void FailsToAdvancePastDelimeter()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         // ReSharper disable once RedundantArgumentDefaultValue
         bool advanced = reader.TryAdvanceTo(Constants.AbsentCharacter, true);
@@ -53,7 +53,7 @@ public class TryAdvanceTo
     [Fact]
     public void FailsAtEnd()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
         reader.Advance(Constants.DataString.Length);
 
         Assert.False(reader.TryAdvanceTo('a'));
@@ -62,7 +62,7 @@ public class TryAdvanceTo
     [Fact]
     public void SuccessfullyAdvancesToSpanDelimeter()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         bool advanced = reader.TryAdvanceTo(Constants.DataString[5..10], false);
 
@@ -73,7 +73,7 @@ public class TryAdvanceTo
     [Fact]
     public void SuccessfullyAdvancesPastSpanDelimeter()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         // ReSharper disable once RedundantArgumentDefaultValue
         bool advanced = reader.TryAdvanceTo(Constants.DataString[5..10], true);
@@ -85,7 +85,7 @@ public class TryAdvanceTo
     [Fact]
     public void FailsToAdvanceToSpanDelimeter()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         bool advanced = reader.TryAdvanceTo(new[] { Constants.AbsentCharacter, Constants.AbsentCharacter }, false);
 
@@ -96,7 +96,7 @@ public class TryAdvanceTo
     [Fact]
     public void FailsToAdvancePastSpanDelimeter()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         // ReSharper disable once RedundantArgumentDefaultValue
         bool advanced = reader.TryAdvanceTo(new[] { Constants.AbsentCharacter, Constants.AbsentCharacter }, true);
@@ -108,7 +108,7 @@ public class TryAdvanceTo
     [Fact]
     public void FailsAtEndSpan()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
         reader.Advance(Constants.DataString.Length);
 
         Assert.False(reader.TryAdvanceTo(new[] { 'a', 'a' }));

@@ -7,7 +7,7 @@ public class Slice
     [Fact]
     public void WithoutStart()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         reader.Advance(2);
 
         MemoryReader<char> slice = reader.Slice(4);
@@ -19,7 +19,7 @@ public class Slice
     [Fact]
     public void WithStart()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
 
         MemoryReader<char> slice = reader.Slice(2, 4);
         Assert.Equal(4, slice.Remaining);

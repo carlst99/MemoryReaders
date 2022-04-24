@@ -8,7 +8,7 @@ public class Advance
     [Fact]
     public void Succeeds()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         reader.Advance(2);
         Assert.Equal(2, reader.Index);
@@ -20,7 +20,7 @@ public class Advance
     [Fact]
     public void SucceedsWhenAdvancingPastEnd()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         reader.Advance(Constants.DataString.Length + 5);
         Assert.Equal(Constants.DataString.Length, reader.Index);
@@ -31,7 +31,7 @@ public class Advance
     {
         Assert.Throws<ArgumentOutOfRangeException>
         (
-            () => Constants.DefaultSpanReader.Advance(-1)
+            () => Constants.GetDefaultSpanReader().Advance(-1)
         );
     }
 }

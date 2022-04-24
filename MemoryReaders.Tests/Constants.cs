@@ -8,9 +8,9 @@ public static class Constants
     public const string DataString = "The quick brown fox jumped over the lazy dog";
     public const char AbsentCharacter = '1';
 
-    public static MemoryReader<char> DefaultMemoryReader
+    public static MemoryReader<char> GetDefaultMemoryReader()
         => new(DataString.AsMemory());
 
-    public static SpanReader<char> DefaultSpanReader
+    public static SpanReader<char> GetDefaultSpanReader()
         => new(DataString);
 }

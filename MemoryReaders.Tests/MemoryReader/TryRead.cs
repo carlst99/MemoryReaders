@@ -7,7 +7,7 @@ public class TryRead
     [Fact]
     public void Succeeds()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         bool read = reader.TryRead(out char value);
 
         Assert.True(read);
@@ -18,7 +18,7 @@ public class TryRead
     [Fact]
     public void SucceedsOnLast()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         reader.Advance(Constants.DataString.Length - 1);
         bool peeked = reader.TryRead(out char value);
 
@@ -30,7 +30,7 @@ public class TryRead
     [Fact]
     public void FailsAtEnd()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         reader.Advance(Constants.DataString.Length + 1);
         bool peeked = reader.TryRead(out char value);
 

@@ -8,7 +8,7 @@ public class Rewind
     [Fact]
     public void Succeeds()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         reader.Advance(2);
         reader.Rewind(1);
@@ -22,7 +22,7 @@ public class Rewind
     [Fact]
     public void SucceedsWhenRewindingPastStart()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         reader.Advance(5);
         reader.Rewind(10);
@@ -34,7 +34,7 @@ public class Rewind
     {
         Assert.Throws<ArgumentOutOfRangeException>
         (
-            () => Constants.DefaultSpanReader.Rewind(-1)
+            () => Constants.GetDefaultSpanReader().Rewind(-1)
         );
     }
 }

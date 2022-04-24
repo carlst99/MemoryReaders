@@ -8,7 +8,7 @@ public class TryPeek
     [Fact]
     public void Succeeds()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         bool peeked = reader.TryPeek(out char value);
 
         Assert.True(peeked);
@@ -18,7 +18,7 @@ public class TryPeek
     [Fact]
     public void SucceedsOnLast()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         reader.Advance(Constants.DataString.Length - 1);
         bool peeked = reader.TryPeek(out char value);
 
@@ -29,7 +29,7 @@ public class TryPeek
     [Fact]
     public void FailsAtEnd()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         reader.Advance(Constants.DataString.Length + 1);
         bool peeked = reader.TryPeek(out char value);
 
@@ -40,7 +40,7 @@ public class TryPeek
     [Fact]
     public void SucceedsWithOffset()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         bool peeked = reader.TryPeek(5, out char value);
 
         Assert.True(peeked);
@@ -50,7 +50,7 @@ public class TryPeek
     [Fact]
     public void SucceedsWithOffsetOnLast()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         reader.Advance(Constants.DataString.Length - 2);
         bool peeked = reader.TryPeek(1, out char value);
 
@@ -61,7 +61,7 @@ public class TryPeek
     [Fact]
     public void FailsWithOffsetAtEnd()
     {
-        MemoryReader<char> reader = Constants.DefaultMemoryReader;
+        MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
         reader.Advance(Constants.DataString.Length - 1);
         bool peeked = reader.TryPeek(1, out char value);
 
@@ -74,7 +74,7 @@ public class TryPeek
     {
         Assert.Throws<ArgumentOutOfRangeException>
         (
-            () => Constants.DefaultMemoryReader.TryPeek(-1, out _)
+            () => Constants.GetDefaultMemoryReader().TryPeek(-1, out _)
         );
     }
 }

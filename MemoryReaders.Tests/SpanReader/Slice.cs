@@ -7,7 +7,7 @@ public class Slice
     [Fact]
     public void WithoutStart()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
         reader.Advance(2);
 
         SpanReader<char> slice = reader.Slice(4);
@@ -19,7 +19,7 @@ public class Slice
     [Fact]
     public void WithStart()
     {
-        SpanReader<char> reader = Constants.DefaultSpanReader;
+        SpanReader<char> reader = Constants.GetDefaultSpanReader();
 
         SpanReader<char> slice = reader.Slice(2, 4);
         Assert.Equal(4, slice.Remaining);
