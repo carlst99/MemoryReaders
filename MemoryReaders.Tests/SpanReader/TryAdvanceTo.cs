@@ -51,6 +51,15 @@ public class TryAdvanceTo
     }
 
     [Fact]
+    public void FailsAtEnd()
+    {
+        SpanReader<char> reader = Constants.DefaultSpanReader;
+        reader.Advance(Constants.DataString.Length);
+
+        Assert.False(reader.TryAdvanceTo('a'));
+    }
+
+    [Fact]
     public void SuccessfullyAdvancesToSpanDelimeter()
     {
         SpanReader<char> reader = Constants.DefaultSpanReader;
@@ -94,5 +103,14 @@ public class TryAdvanceTo
 
         Assert.False(advanced);
         Assert.Equal(0, reader.Index);
+    }
+
+    [Fact]
+    public void FailsAtEndSpan()
+    {
+        SpanReader<char> reader = Constants.DefaultSpanReader;
+        reader.Advance(Constants.DataString.Length);
+
+        Assert.False(reader.TryAdvanceTo(new[] { 'a', 'a' }));
     }
 }
