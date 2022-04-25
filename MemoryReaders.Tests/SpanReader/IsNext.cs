@@ -48,16 +48,20 @@ public class IsNext
     public void SucceedsWithoutAdvancingSpan()
     {
         SpanReader<char> reader = Constants.GetDefaultSpanReader();
-        Assert.True(reader.IsNext(Constants.DataString[..2]));
-        Assert.Equal(0, reader.Consumed);
+        reader.Advance(1);
+
+        Assert.True(reader.IsNext(Constants.DataString[1..3]));
+        Assert.Equal(1, reader.Consumed);
     }
 
     [Fact]
     public void SucceedsAndAdvancesSpan()
     {
         SpanReader<char> reader = Constants.GetDefaultSpanReader();
-        Assert.True(reader.IsNext(Constants.DataString[..2], true));
-        Assert.Equal(2, reader.Consumed);
+        reader.Advance(1);
+
+        Assert.True(reader.IsNext(Constants.DataString[1..3], true));
+        Assert.Equal(3, reader.Consumed);
     }
 
     [Fact]
