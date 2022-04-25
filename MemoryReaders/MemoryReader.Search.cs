@@ -62,7 +62,7 @@ namespace MemoryReaders
             if (index == -1)
                 return false;
 
-            Consumed = advancePastDelimiter ? index + 1 : index;
+            Advance(advancePastDelimiter ? index + 1 : index);
             return true;
         }
 
@@ -81,7 +81,7 @@ namespace MemoryReaders
             if (index == -1)
                 return false;
 
-            Consumed = advancePastDelimiter ? index + delimiter.Length : index;
+            Advance(advancePastDelimiter ? index + delimiter.Length : index);
             return true;
         }
     }

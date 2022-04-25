@@ -8,6 +8,7 @@ public class TryAdvanceTo
     public void SuccessfullyAdvancesToDelimeter()
     {
         MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
+        reader.Advance(2);
 
         bool advanced = reader.TryAdvanceTo(Constants.DataString[^5], false);
 
@@ -19,6 +20,7 @@ public class TryAdvanceTo
     public void SuccessfullyAdvancesPastDelimeter()
     {
         MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
+        reader.Advance(2);
 
         // ReSharper disable once RedundantArgumentDefaultValue
         bool advanced = reader.TryAdvanceTo(Constants.DataString[^5], true);
@@ -31,23 +33,25 @@ public class TryAdvanceTo
     public void FailsToAdvanceToDelimeter()
     {
         MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
+        reader.Advance(2);
 
         bool advanced = reader.TryAdvanceTo(Constants.AbsentCharacter, false);
 
         Assert.False(advanced);
-        Assert.Equal(0, reader.Consumed);
+        Assert.Equal(2, reader.Consumed);
     }
 
     [Fact]
     public void FailsToAdvancePastDelimeter()
     {
         MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
+        reader.Advance(2);
 
         // ReSharper disable once RedundantArgumentDefaultValue
         bool advanced = reader.TryAdvanceTo(Constants.AbsentCharacter, true);
 
         Assert.False(advanced);
-        Assert.Equal(0, reader.Consumed);
+        Assert.Equal(2, reader.Consumed);
     }
 
     [Fact]
@@ -63,6 +67,7 @@ public class TryAdvanceTo
     public void SuccessfullyAdvancesToSpanDelimeter()
     {
         MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
+        reader.Advance(2);
 
         bool advanced = reader.TryAdvanceTo(Constants.DataString[5..10], false);
 
@@ -74,6 +79,7 @@ public class TryAdvanceTo
     public void SuccessfullyAdvancesPastSpanDelimeter()
     {
         MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
+        reader.Advance(2);
 
         // ReSharper disable once RedundantArgumentDefaultValue
         bool advanced = reader.TryAdvanceTo(Constants.DataString[5..10], true);
@@ -86,23 +92,25 @@ public class TryAdvanceTo
     public void FailsToAdvanceToSpanDelimeter()
     {
         MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
+        reader.Advance(2);
 
         bool advanced = reader.TryAdvanceTo(new[] { Constants.AbsentCharacter, Constants.AbsentCharacter }, false);
 
         Assert.False(advanced);
-        Assert.Equal(0, reader.Consumed);
+        Assert.Equal(2, reader.Consumed);
     }
 
     [Fact]
     public void FailsToAdvancePastSpanDelimeter()
     {
         MemoryReader<char> reader = Constants.GetDefaultMemoryReader();
+        reader.Advance(2);
 
         // ReSharper disable once RedundantArgumentDefaultValue
         bool advanced = reader.TryAdvanceTo(new[] { Constants.AbsentCharacter, Constants.AbsentCharacter }, true);
 
         Assert.False(advanced);
-        Assert.Equal(0, reader.Consumed);
+        Assert.Equal(2, reader.Consumed);
     }
 
     [Fact]
