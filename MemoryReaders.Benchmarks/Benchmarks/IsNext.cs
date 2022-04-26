@@ -5,7 +5,7 @@ namespace MemoryReaders.Benchmarks.Benchmarks;
 
 public class IsNext
 {
-    [Benchmark]
+    [Benchmark(Baseline = true)]
     public bool UsingSequenceReader()
     {
         SequenceReader<char> reader = Constants.GetDefaultSequenceReader();
