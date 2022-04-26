@@ -96,6 +96,30 @@ namespace MemoryReaders
         }
 
         /// <summary>
+        /// Attempts to read the exact amount of data as specified by <paramref name="count"/>.
+        /// </summary>
+        /// <param name="span">The read data, if any.</param>
+        /// <param name="count">The amount of data to read.</param>
+        /// <returns><c>True</c> if the exact amount of data was able to be read, else <c>False</c>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="count"/> is negative.</exception>
+        public bool TryReadExact(out ReadOnlySpan<T> span, int count)
+        {
+            if (count < 0)
+                throw new ArgumentOutOfRangeException(nameof(count), count, "Count must not be a negative value");
+
+            if (count > Remaining)
+            {
+                span = default;
+                return false;
+            }
+
+            span = Span.Slice(Consumed, count);
+            Advance(count);
+
+            return true;
+        }
+
+        /// <summary>
         /// Advances to the given delimiter, if found, and optionally advances past it.
         /// </summary>
         /// <param name="delimiter">The delimiter to search for.</param>
