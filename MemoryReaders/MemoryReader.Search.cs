@@ -156,5 +156,24 @@ namespace MemoryReaders
             Advance(advancePastDelimiter ? index + delimiter.Length : index);
             return true;
         }
+
+        /// <summary>
+        /// Advances to any of the given delimiters, if found, and optionally advances past it.
+        /// </summary>
+        /// <param name="delimiters">The delimiters to search for.</param>
+        /// <param name="advancePastDelimiter"><c>True></c> to move past the delimiter, if found.</param>
+        /// <returns><c>True</c> if any of given <paramref name="delimiters"/> were found, otherwise <c>False</c></returns>
+        public bool TryAdvanceToAny(ReadOnlySpan<T> delimiters, bool advancePastDelimiter = true)
+        {
+            if (End)
+                return false;
+
+            int index = Memory.Span[Consumed..].IndexOfAny(delimiters);
+            if (index == -1)
+                return false;
+
+            Advance(advancePastDelimiter ? index + 1 : index);
+            return true;
+        }
     }
 }
