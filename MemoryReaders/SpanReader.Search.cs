@@ -96,6 +96,31 @@ namespace MemoryReaders
         }
 
         /// <summary>
+        /// Attempts to read everything up till the first occurence of any of
+        /// the given <paramref name="delimiters"/>.
+        /// </summary>
+        /// <param name="span">The read data, if any.</param>
+        /// <param name="delimiters">The delimiters to search for.</param>
+        /// <param name="advancePastDelimiter"><c>True</c> to move past the delimiter, if found.</param>
+        /// <returns><c>True</c> if any of the given <paramref name="delimiters"/> were found, otherwise <c>False</c>.</returns>
+        public bool TryReadToAny(out ReadOnlySpan<T> span, ReadOnlySpan<T> delimiters, bool advancePastDelimiter = true)
+        {
+            int currIndex = Consumed;
+
+            if (!TryAdvanceToAny(delimiters, false))
+            {
+                span = default;
+                return false;
+            }
+
+            span = Span[currIndex..Consumed];
+            if (advancePastDelimiter)
+                Consumed++;
+
+            return true;
+        }
+
+        /// <summary>
         /// Attempts to read the exact amount of data as specified by <paramref name="count"/>.
         /// </summary>
         /// <param name="span">The read data, if any.</param>
