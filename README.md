@@ -1,7 +1,7 @@
 # MemoryReaders
 
 [![Nuget | carlst99.MemoryReaders](https://img.shields.io/nuget/v/carlst99.MemoryReaders?label=carlst99.MemoryReaders)](https://www.nuget.org/packages/carlst99.MemoryReaders)
-[![main](https://github.com/carlst99/MemoryReaders/actions/workflows/main.yml/badge.svg)](https://github.com/carlst99/MemoryReaders/actions/main)
+[![main](https://github.com/carlst99/MemoryReaders/actions/workflows/main.yml/badge.svg)](https://github.com/carlst99/MemoryReaders/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/carlst99/MemoryReaders/branch/main/graph/badge.svg?token=VA4L8CGX9Q)](https://codecov.io/gh/carlst99/MemoryReaders)
 
 The MemoryReaders package provides `SequenceReader<T>`-like APIs for `Span<T>` and `Memory<T>` instances,
