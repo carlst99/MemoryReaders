@@ -17,3 +17,6 @@ jobs:
         
       - name: Run Tests
         run: dotnet test --configuration Release
+        
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v3
