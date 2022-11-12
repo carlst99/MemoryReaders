@@ -1,6 +1,8 @@
 # MemoryReaders
 
-[![build](https://github.com/carlst99/MemoryReaders/actions/workflows/main.yml/badge.svg)](https://github.com/carlst99/MemoryReaders/actions/main)
+[![Nuget | carlst99.MemoryReaders](https://img.shields.io/nuget/v/carlst99.MemoryReaders?label=carlst99.MemoryReaders)](https://www.nuget.org/packages/carlst99.MemoryReaders)
+[![main](https://github.com/carlst99/MemoryReaders/actions/workflows/main.yml/badge.svg)](https://github.com/carlst99/MemoryReaders/actions/main)
+[![codecov](https://codecov.io/gh/carlst99/MemoryReaders/branch/main/graph/badge.svg?token=VA4L8CGX9Q)](https://codecov.io/gh/carlst99/MemoryReaders)
 
 The MemoryReaders package provides `SequenceReader<T>`-like APIs for `Span<T>` and `Memory<T>` instances,
 with a similar focus on performance and minimal-or-zero heap allocations.
@@ -9,6 +11,12 @@ The `SpanReader<T>` and `MemoryReader<T>` structures afford the ability to read 
 instances in a forward-only manner (rewinding *is* supported). 
 
 MemoryReaders targets `netstandard2.1`.
+
+## Install
+
+MemoryReaders is [available on NuGet](https://www.nuget.org/packages/carlst99.MemoryReaders)
+
+> dotnet add package carlst99.MemoryReaders
 
 ## Usage
 
