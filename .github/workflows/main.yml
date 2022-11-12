@@ -16,7 +16,7 @@ jobs:
           dotnet-version: '6.0.x'
         
       - name: Run Tests
-        run: dotnet test --configuration Release
+        run: dotnet test --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
         
       - name: Upload Coverage
         uses: codecov/codecov-action@v3
