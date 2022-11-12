@@ -1,5 +1,7 @@
 # MemoryReaders
 
+[![build](https://github.com/carlst99/MemoryReaders/actions/workflows/main.yml/badge.svg)](https://github.com/carlst99/MemoryReaders/actions/main)
+
 The MemoryReaders package provides `SequenceReader<T>`-like APIs for `Span<T>` and `Memory<T>` instances,
 with a similar focus on performance and minimal-or-zero heap allocations.
 
